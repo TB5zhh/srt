@@ -16,5 +16,11 @@ compile_local:
 run_local: compile_local
 	bin/local
 
+mmap:
+	# gcc -c src/mmap_test.c -o obj/mmap_test.o
+	# ld obj/mmap_test.o -lrt -o bin/mmap_test
+	gcc src/mmap_test.c -o bin/mmap_test -lrt
+	bin/mmap_test
+
 clean:
-	rm -rf bin/*
+	rm -rf bin/* obj/*
