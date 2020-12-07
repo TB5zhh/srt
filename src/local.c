@@ -19,6 +19,7 @@ int main()
     struct Data *data1 = malloc(sizeof(struct Data));
     memset(data1, 1, sizeof(struct Data));
     int i;
+    double sum = 0.;
     for (i = 0; i < TEST_TIME; i++)
     {
         memset(data->data, 0, sizeof(data->data));
@@ -28,7 +29,10 @@ int main()
         memcpy(data1, data, sizeof(struct Data));
         gettimeofday(&a, NULL);
         printf("time:%fus, receive:%s\n", difftimeval(&a, &data1->tv), data1->data);
+        sum += difftimeval(&a, &data1->tv);
     }
+    printf("Avg time: %lf\n", sum / TEST_TIME);
+
     free(data);
     free(data1);
 }
