@@ -35,7 +35,7 @@
 // * 1. wait until available to read(1)
 // * 2. mmap input pointer to the page offset of 1st area given by source index
 // * 3. write status(1->2), then return
-
+// 
 // * Finalize:
 // * 1. shm_unlink the shared areas
 
@@ -47,13 +47,12 @@ int main(int argc, char **argv)
 
     if (proc_id == 0)
     {
-        // char *recv = (char *)0x100000000000;
-        char *recv = (char *)malloc(1000 * sizeof(char));
-        printf("Allocated: %x\n", recv);
-        getchar();
+        char *recv = (char *)0x100000000000;
+        // char *recv = (char *)malloc(1000 * sizeof(char));
+        // getchar();
         mpi_receive(recv, SIZE, 1);
         printf("%s\n", recv);
-        getchar();
+        // getchar();
     }
     else if (proc_id == 1)
     {

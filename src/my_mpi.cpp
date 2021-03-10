@@ -158,7 +158,7 @@ int mpi_receive(void *place, size_t size, int tgt_index)
         ;
     printf("Receiver: locked\n");
     int offset = _status_ptr[tgt_index].offset;
-    place = mmap(place, size, PROT_READ, MAP_SHARED, _data_fd, offset);
+    place = mmap(place, size, PROT_READ, MAP_SHARED, _data_fd, offset); //mremap()
     if (mtx->try_lock())
         mtx->unlock();
     printf("Receiver: unlocked\n");
