@@ -1,7 +1,7 @@
-NUM_PROC=10
+NUM_PROC=2
 
 phase_1:
-	gcc src/phase_1.c src/my_mpi.c -o bin/phase_1 -lrt
+	g++ src/phase_1.cpp src/my_mpi.cpp -o bin/phase_1 -lrt -lpthread
 	bin/phase_1 ${NUM_PROC}
 
 clean:

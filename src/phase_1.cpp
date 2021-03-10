@@ -5,7 +5,7 @@
 #include <string.h>
 
 #define SIZE 4096
-
+#define PAGE_SIZE (4096 * 4)
 // * Command argument:
 // * 1. count of processes
 // * 2. index of current process
@@ -42,22 +42,21 @@
 int main(int argc, char **argv)
 {
     mpi_init(argc, argv);
-
     int proc_id = get_index();
-    // printf("My proc id is %d\n", proc_id);
+    printf("My index is %d: %d\n", proc_id, getpid());
 
-    if (proc_id != 0)
+    if (proc_id == 0)
     {
-        // parent process
-        // printf("My proc id is %d\n", proc_id);
-        char *recv = NULL;
+        // char *recv = (char *)0x100000000000;
+        char *recv = (char *)malloc(1000 * sizeof(char));
+        printf("Allocated: %x\n", recv);
         getchar();
-        mpi_receive((void **)&recv, SIZE, 1);
+        mpi_receive(recv, SIZE, 1);
         printf("%s\n", recv);
+        getchar();
     }
     else if (proc_id == 1)
     {
-        // daemon(0,0);
         char *word = (char *)my_malloc(SIZE);
         memcpy(word, "hello! test\n", 13);
         mpi_send(word, SIZE, 0);
